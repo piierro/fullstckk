@@ -1,8 +1,8 @@
 import { trpc } from '../../lib/trpc'
 
 export const AllIdeas = () => {
-  const { data, error, isLoading, isRefetching, isError } = trpc.getIdeas.useQuery()
-  if (isLoading) {
+  const { data, error, isLoading, isFetching, isError } = trpc.getIdeas.useQuery()
+  if (isLoading || isFetching) {
     return <span>Loading...</span>
   }
 
