@@ -25,7 +25,7 @@ export const AllIdeas = () => {
                   {idea.name}
                 </Link>
               }
-              description={idea.desc}
+              description={idea.description}
             />
           </div>
         ))}
