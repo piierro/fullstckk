@@ -1,2 +1,5 @@
 export { Input } from './Input/index'
 export { TextArea } from './TextArea/index'
+export { Alert } from './Alert/index'
+export { Button } from './Button/index'
+export { FormItems } from './FormItems/index'
