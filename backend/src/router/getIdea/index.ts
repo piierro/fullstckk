@@ -11,8 +11,8 @@ export const getIdeaTrpcRoute = t.procedure
   .query(async ({ ctx, input }) => {
     const idea = await ctx.prisma.idea.findUnique({
       where: {
-        nick: input.ideaNick
-      }
+        nick: input.ideaNick,
+      },
     })
 
     return { idea }
