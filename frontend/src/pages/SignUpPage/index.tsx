@@ -1,15 +1,19 @@
 import { useState } from 'react'
 import css from './index.module.scss'
 import { z } from 'zod'
+import Cookies from 'js-cookie'
 import { trpc } from '../../lib/trpc'
 import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
 import { zSignUpTrpcInput } from '@fullstckk/backend/src/router/signUp/input'
 import { Segment } from '../../components/Segment'
 import { Alert, Button, FormItems, Input } from '../../components/ui'
+import { useNavigate } from 'react-router-dom'
+import { getAllIdeasRoute } from '../../lib/routes'
 
 export const SignUp = () => {
-  const [successMessageVisible, setSuccessMessageVisible] = useState(false)
+  const navigate = useNavigate()
+  const trpcUtils = trpc.useContext()
   const [submittingError, setSubmittingError] = useState<string | null>(null)
   const signUp = trpc.signUp.useMutation()
   const formik = useFormik({
@@ -35,13 +39,10 @@ export const SignUp = () => {
     ),
     onSubmit: async (values) => {
       try {
-        setSubmittingError(null)
-        await signUp.mutateAsync(values)
-        formik.resetForm()
-        setSuccessMessageVisible(true)
-        setTimeout(() => {
-          setSuccessMessageVisible(false)
-        }, 3000)
+        const { token } = await signUp.mutateAsync(values)
+        Cookies.set('token', token, { expires: 99999 })
+        void trpcUtils.invalidate()
+        navigate(getAllIdeasRoute())
       } catch (error: any) {
         setSubmittingError(error.message)
       }
@@ -57,7 +58,6 @@ export const SignUp = () => {
           <Input label="Password again" name="passwordAgain" type="password" formik={formik} />
           {!formik.isValid && !!formik.submitCount && <Alert color="red">Some fields are invalid</Alert>}
           {submittingError && <Alert color="red">{submittingError}</Alert>}
-          {successMessageVisible && <Alert color="green">Thanks for sign up!</Alert>}
           <Button loading={formik.isSubmitting}>Sign Up</Button>
         </FormItems>
       </form>
