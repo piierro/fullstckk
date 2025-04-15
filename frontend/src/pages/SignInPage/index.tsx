@@ -11,7 +11,7 @@ import { getAllIdeasRoute } from '../../lib/routes'
 
 export const SignIn = () => {
   const navigate = useNavigate()
-   const trpcUtils = trpc.useContext()
+  const trpcUtils = trpc.useContext()
   const [submittingError, setSubmittingError] = useState<string | null>(null)
   const signIn = trpc.signIn.useMutation()
   const formik = useFormik({

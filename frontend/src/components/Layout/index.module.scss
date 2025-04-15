@@ -42,6 +42,10 @@ $breakpoint: '<=900px';
         .link {
           @include link;
         }
+        .bottom {
+          position: absolute;
+          bottom: 20px;
+        }
       }
     }
   }

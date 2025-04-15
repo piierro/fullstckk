@@ -16,7 +16,7 @@ export const Layout = () => {
               All Ideas
             </Link>
           </li>
-              {isLoading || isFetching || isError ? null : data.me ? (
+          {isLoading || isFetching || isError ? null : data.me ? (
             <>
               <li className={css.item}>
                 <Link className={css.link} to={getNewIdeaRoute()}>
@@ -24,7 +24,7 @@ export const Layout = () => {
                 </Link>
               </li>
               <li className={css.item}>
-                <Link className={css.link} to={getSignOutRoute()}>
+                <Link className={`${css.link} ${css.bottom}`} to={getSignOutRoute()}>
                   Log Out ({data.me.nick})
                 </Link>
               </li>

@@ -1,3 +1,4 @@
+import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { t } from '../lib/trpc'
 
 // @index('./**/index.ts', f => `import { ${f.path.split('/').slice(0, -1).pop()}TrpcRoute } from '${f.path.split('/').slice(0, -1).join('/')}'`)
@@ -7,6 +8,7 @@ import { getIdeasTrpcRoute } from './getIdeas'
 import { getMeTrpcRoute } from './getMe'
 import { signInTrpcRoute } from './signIn'
 import { signUpTrpcRoute } from './signUp'
+import { updateIdeaTrpcRoute } from './updateIdea'
 // @endindex
 
 export const trpcRouter = t.router({
@@ -17,9 +19,12 @@ export const trpcRouter = t.router({
   getMe: getMeTrpcRoute,
   signIn: signInTrpcRoute,
   signUp: signUpTrpcRoute,
+  updateIdea: updateIdeaTrpcRoute,
   // @endindex
 })
 
 export type TrpcRouter = typeof trpcRouter
+export type TrpcRouterInput = inferRouterInputs<TrpcRouter>
+export type TrpcRouterOutput = inferRouterOutputs<TrpcRouter>
 
 // Command+Shift+P --> Generate index
